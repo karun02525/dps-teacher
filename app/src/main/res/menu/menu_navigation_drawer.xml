@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_application"
+            android:icon="@drawable/ic_application"
+            android:title="Application" />
+      
+        <item
+            android:id="@+id/nav_subject"
+            android:icon="@drawable/ic_subject"
+            android:title="Subjects" />
+
+
+        <item
+            android:id="@+id/nav_notice"
+            android:icon="@drawable/ic_notices"
+            android:title="Notice" />
+
+
+        <item
+            android:id="@+id/nav_fee"
+            android:icon="@drawable/ic_fee"
+            android:title="Fee" />
+
+
+        <item
+            android:id="@+id/nav_result"
+            android:icon="@drawable/ic_result"
+            android:title="Result" />
+
+
+        <item
+            android:id="@+id/nav_support"
+            android:icon="@drawable/ic_support"
+            android:title="Support" />
+
+        <item
+            android:id="@+id/nav_help"
+            android:icon="@drawable/ic_help"
+            android:title="Help" />
+
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_logout"
+            android:title="Log out" />
+    </group>
+</menu>
