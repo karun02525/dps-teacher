@@ -26,6 +26,7 @@ class ProfileViewModel(private val restClient: RestClient) : ViewModel() {
 
 
 
+    //get Teacher profile or List of Students
     fun getProfile(teacher_id: String) {
         GlobalScope.launch(Dispatchers.Main) {
             try {
@@ -44,22 +45,8 @@ class ProfileViewModel(private val restClient: RestClient) : ViewModel() {
 
 
 
-    fun getStudentsList(class_id: String,section: String) {
-        GlobalScope.launch(Dispatchers.Main) {
-            try {
-                restClient.webServices().getStudentsListAsync(class_id,section).await().let {
-                    if (it.isSuccessful)
-                        data.value = it.body()!!.data!!
-                    else
-                        errorMsg.value = ApiStatus.isCheckAPIStatus(it.code(), it.errorBody())
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
-                errorMsg.value = App.appContext?.getString(R.string.no_internet_available)
-            }
-        }
-    }
 
+    // Submit students attendance
     fun submitAttendance(params: RequestBody) {
         GlobalScope.launch(Dispatchers.Main) {
             try {

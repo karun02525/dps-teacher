@@ -20,6 +20,7 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.dpsteacher.R
 import org.dpsteacher.model.AssignStudentsData
+import org.dpsteacher.model.StudentModel
 import org.dpsteacher.mvvm.ProfileViewModel
 import org.dpsteacher.utils.*
 import org.json.JSONArray
@@ -30,7 +31,9 @@ class AttendanceFragment : Fragment() {
 
     private val sp by lazy { TeacherSharedPref.instance }
     private val viewModel: ProfileViewModel by viewModel()
-    private var listAttendance = listOf<AssignStudentsData>()
+    private var listAttendance = listOf<StudentModel>()
+    var class_ID=""
+    val teacher_ID="616716b42ba31655d71e2e93"
 
     companion object {
         @JvmStatic
@@ -48,11 +51,9 @@ class AttendanceFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
-        setupViewModel()
-        viewModel.getStudentsList(sp.class_id ?: "", sp.section ?: "")
         hideShowProgress(true)
+        setupViewModel()
+        viewModel.getProfile("616716b42ba31655d71e2e93")
 
         val date = getCurrentDateTime()
         val dateInString = date.toString("EEEE  MMMM dd, yyyy")
@@ -62,6 +63,7 @@ class AttendanceFragment : Fragment() {
             alertDialog()
         }
     }
+
 
     @SuppressLint("SetTextI18n")
     private fun alertDialog() {
@@ -109,10 +111,11 @@ class AttendanceFragment : Fragment() {
 
 
     private fun setupViewModel() {
-        viewModel.data.observe(this, Observer {
-            listAttendance = it
-            hideShowProgress(false)
 
+        viewModel.dataProfile.observe(this, Observer {
+            hideShowProgress(false)
+            listAttendance = it.student
+            class_ID=it.teacher.classes.id
             if (listAttendance.isEmpty()) {
                 empty_data.visibility = View.VISIBLE
             } else {
@@ -120,8 +123,14 @@ class AttendanceFragment : Fragment() {
                 rv_stu_list.adapter = mAdapter
                 empty_data.visibility = View.GONE
             }
-
         })
+
+        viewModel.errorMsg.observe(this, Observer {
+            hideShowProgress(false)
+            context?.toast(it)
+        })
+
+
         viewModel.success.observe(this, Observer {
             alertOkDialog(it)
             hideShowProgress(false)
@@ -149,18 +158,14 @@ class AttendanceFragment : Fragment() {
         for (i in listAttendance) {
             // log("Data " + i.fname + " " + i.classes?.rollNo + " " + i.flag)
             val obj = JSONObject()
-            obj.put("section", i.classes?.section)
-            obj.put("class_id", i.classId)
-            obj.put("teacher_id", sp.teacherId)
             obj.put("student_id", i.id)
             obj.put("att_type", i.flag)
             jsonArray.put(obj);
         }
 
         val studentsObj = JSONObject()
-        studentsObj.put("teacher_id", sp.teacherId)
-        studentsObj.put("class_id", sp.class_id)
-        studentsObj.put("section", sp.section)
+        studentsObj.put("teacher_id", teacher_ID)
+        studentsObj.put("class_id", class_ID)
         studentsObj.put("attlist", jsonArray)
         log("Student $studentsObj")
 
@@ -173,7 +178,7 @@ class AttendanceFragment : Fragment() {
 }
 
 //---------------------------------------------Adapter-------------------------------------------------
-class StudentsListAdapter(var list: List<AssignStudentsData> = listOf()) :
+class StudentsListAdapter(var list: List<StudentModel> = listOf()) :
     RecyclerView.Adapter<StudentsListAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(
@@ -191,20 +196,19 @@ class StudentsListAdapter(var list: List<AssignStudentsData> = listOf()) :
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         @SuppressLint("SetTextI18n")
         private var status = "A"
-        fun bindItems(model: AssignStudentsData) {
+        fun bindItems(model: StudentModel) {
             itemView.run {
-                tv_sr.text = "${adapterPosition + 1}"
-                tv_roll.text = model.classes?.rollNo
+                tv_roll.text = model.rollno.toString()
                 tv_name.text = "${model.fname} ${model.lname}"
 
-                model.flag = 2
+                model.flag = "Present"
                 radioGroup.setOnCheckedChangeListener { group, checkedId ->
                     val radio: RadioButton = group.findViewById(checkedId)
                     status = radio.text.toString()
                     if (status == "A") {
-                        model.flag = 2
+                        model.flag = "Present"
                     } else {
-                        model.flag = 1
+                        model.flag = "Apsent"
                     }
                 }
 

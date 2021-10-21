@@ -69,5 +69,6 @@ data class StudentModel(
     @SerializedName("student_doc_front")
     var studentDocFront: String,
     @SerializedName("updatedAt")
-    var updatedAt: String
+    var updatedAt: String,
+    var flag: String = ""
 )

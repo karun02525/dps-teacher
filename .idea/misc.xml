@@ -4,6 +4,8 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/layout/adapter_students_list.xml" value="0.40989583333333335" />
+        <entry key="app/src/main/res/layout/fragment_attentance.xml" value="0.40989583333333335" />
+        <entry key="app/src/main/res/layout/teacher_adapter_atten.xml" value="0.2708333333333333" />
         <entry key="app/src/main/res/layout/teacher_fragment_own_profile.xml" value="0.40989583333333335" />
         <entry key="app/src/main/res/layout/teacher_fragment_profile.xml" value="0.40989583333333335" />
         <entry key="app/src/main/res/layout/teacher_fragment_student_list_info.xml" value="0.40989583333333335" />
