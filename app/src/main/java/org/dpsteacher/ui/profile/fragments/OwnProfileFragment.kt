@@ -45,7 +45,7 @@ class OwnProfileFragment : Fragment() {
 
 
         Picasso.get()
-            .load("${Const.BASE_URL}/${teacher.teacherAvatar}")
+            .load("${Const.ImageBaseUrl}/${teacher.teacherAvatar}")
             .into(iv_teacher_pic, object : Callback {
                 override fun onSuccess() {
 

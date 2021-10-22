@@ -78,7 +78,7 @@ class StudentsListAdapter(var list: List<StudentModel> = listOf()) :
 
 
                 Picasso.get()
-                    .load("${Const.BASE_URL}/${model.studentAvatar}")
+                    .load("${Const.ImageBaseUrl}/${model.studentAvatar}")
                     .into(tvStudentPic, object : Callback {
                         override fun onSuccess() {
 

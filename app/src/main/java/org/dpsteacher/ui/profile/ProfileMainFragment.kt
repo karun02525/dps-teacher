@@ -46,7 +46,7 @@ class ProfileMainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         hideShowProgress(true)
-        viewModel.getProfile("616716b42ba31655d71e2e93")
+        viewModel.getProfile("6171bdbbe6efc3a63bede3e3")
 
     }
 

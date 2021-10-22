@@ -33,7 +33,7 @@ class AttendanceFragment : Fragment() {
     private val viewModel: ProfileViewModel by viewModel()
     private var listAttendance = listOf<StudentModel>()
     var class_ID=""
-    val teacher_ID="616716b42ba31655d71e2e93"
+    val teacher_ID="6171bdbbe6efc3a63bede3e3"
 
     companion object {
         @JvmStatic
@@ -53,7 +53,7 @@ class AttendanceFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         hideShowProgress(true)
         setupViewModel()
-        viewModel.getProfile("616716b42ba31655d71e2e93")
+        viewModel.getProfile("6171bdbbe6efc3a63bede3e3")
 
         val date = getCurrentDateTime()
         val dateInString = date.toString("EEEE  MMMM dd, yyyy")
